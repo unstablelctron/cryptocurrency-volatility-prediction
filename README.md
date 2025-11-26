@@ -36,7 +36,7 @@ End-to-end machine learning project for predicting cryptocurrency volatility usi
    - Method: `POST`
    - Body (JSON): one or more records that contain **exactly the same feature columns** used during training.
 
-   Example (you MUST adapt keys to your real feature names):
+   Example :
 
    ```json
    {
