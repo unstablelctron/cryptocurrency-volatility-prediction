@@ -9,7 +9,7 @@ End-to-end machine learning project for predicting cryptocurrency volatility usi
 - `models/`               – Saved trained model (`xgb_volatility_model.pkl`)
 - `scripts/`              – CLI helpers (prediction, etc.)
 - `config/`               – Configuration files (e.g. params, paths)
-- `data/`                 – Raw and processed data (you put your CSVs here)
+- `data/`                 – Raw and processed data 
 - `notebooks/`            – Jupyter notebooks for EDA and experiments
 - `templates/`            – HTML templates used by Flask
 - `static/`               – Static assets (CSS, JS)
@@ -57,10 +57,3 @@ End-to-end machine learning project for predicting cryptocurrency volatility usi
    ```
 
    or an array of such JSON objects.
-
-## IMPORTANT – Set correct feature columns
-
-In `src/config.py` there is a `FEATURE_COLUMNS` list.  
-You MUST edit that list so that it matches **exactly** the columns used to train your model (same names, same order, excluding the target column).
-
-If columns don't match, XGBoost may throw an error or give wrong predictions.
