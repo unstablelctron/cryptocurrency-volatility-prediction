@@ -1,0 +1,24 @@
+{
+  "SampleFileName": "crypto_data_2024.csv",
+  "LengthOfDateStampInFile": 8,
+  "LengthOfTimeStampInFile": 6,
+  "NumberofColumns": 13,
+
+  "ColName": {
+    "open": "float",
+    "high": "float",
+    "low": "float",
+    "close": "float",
+    "volume": "float",
+    "marketCap": "float",
+    "tr": "float",
+    "atr_14": "float",
+    "log_return": "float",
+    "crypto_name_encoded": "integer",
+    "Day": "integer",
+    "Month": "integer",
+    "Year": "integer",
+    
+    "LogATR": "float"
+  }
+}

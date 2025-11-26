@@ -1,0 +1,78 @@
+name: crypto-volatility-workflow
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'README.md'
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+
+  integration:
+    name: Continuous Integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Lint Code
+        run: |
+          echo "Linting Python files"
+          # Example: use flake8
+          # pip install flake8
+          # flake8 .
+
+      - name: Run Unit Tests
+        run: |
+          echo "Running unit tests"
+          # Example:
+          # pytest -q
+
+  build-and-push-ecr-image:
+    name: Continuous Delivery
+    needs: integration
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build and Push Docker Image to Amazon ECR
+        id: build-image
+        env:
+          IMAGE_TAG: latest
+        run: |
+          echo "Building Docker Image..."
+          
+          docker build -t ${{ secrets.AWS_ECR_REPO_URI }}:$IMAGE_TAG .
+          
+          echo "Pushing Image to ECR..."
+          docker push ${{ secrets.AWS_ECR_REPO_URI }}:$IMAGE_TAG
+
