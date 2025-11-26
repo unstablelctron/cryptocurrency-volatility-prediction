@@ -25,7 +25,7 @@
     <h1>Crypto Volatility Predictor</h1>
     <div class="box">
         <p>
-            This is a Flask-powered API for your trained volatility prediction model.
+            This is a Flask-powered API for trained volatility prediction model.
             Use the endpoint <code>/api/predict</code> to get predictions.
         </p>
 
@@ -41,7 +41,7 @@
         </ul>
 
         <p>
-            Example request body for a single record (adapt to your actual feature names/values):
+            Example request body for a single record::
         </p>
         <pre>
 {
@@ -52,12 +52,11 @@
   "volume": 3132405,
   "marketCap": 123456789,
   "tr": 2.31,
-  "atr_14": 1.12,
   "log_return": -0.0123,
-  "crypto_name_encoded": 0,
   "Day": 15,
   "Month": 5,
   "Year": 2024
+  "crypto_name_encoded": 0
 }
         </pre>
 
