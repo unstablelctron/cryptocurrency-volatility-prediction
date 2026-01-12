@@ -1,33 +1,35 @@
-## 🔄 Crypto Volatility Prediction – Exact Model Pipeline
-
-```mermaid
 flowchart TD
 
-A[Raw Crypto Price Data<br/>open, high, low, close, volume, marketCap, date] --> B[Feature Engineering]
+A[Raw Crypto Market Data<br/>open, high, low, close,<br/>volume, marketCap, date, crypto_name] 
+--> B[Data Preprocessing & Feature Engineering]
 
-B --> B1[Compute TR = high - low]
-B --> B2[Compute log_return = ln(close/prev_close)]
-B --> B3[Label Encode crypto_name → crypto_name_encoded]
-B --> B4[Extract Day, Month, Year from date]
-B --> B5[Compute ATR14 → log(ATR14)]
-B --> C[Form Final Dataset]
+B --> B1[True Range (TR)<br/>high − low]
+B --> B2[Log Return<br/>ln(close / prev_close)]
+B --> B3[Encode Crypto Name<br/>Label Encoding]
+B --> B4[Date Features<br/>Day, Month, Year]
+B --> B5[ATR(14) Calculation<br/>Target = log(ATR14)]
 
-C --> C1[DROP atr_14]
-C --> C2[DROP crypto_name]
+B1 --> C[Feature Consolidation]
+B2 --> C
+B3 --> C
+B4 --> C
+B5 --> C
 
-C1 --> D[Final 12 Features]
-C2 --> D
+C --> D[Drop Leakage Columns<br/>atr_14, crypto_name]
 
-D --> E[Train-Test Split]
+D --> E[Final Feature Set<br/>12 Input Features]
 
-E --> F[Train XGBoost Regressor<br/>with tuned params]
-F --> G[Evaluate Model<br/>RMSE, MAE, R²]
+E --> F[Train–Test Split]
 
-G --> H[SAVE MODEL<br/>xgb_volatility_model.pkl]
+F --> G[Model Training<br/>XGBoost Regressor<br/>(Tuned Hyperparameters)]
 
-H --> I[Load Model in Flask API]
+G --> H[Model Evaluation<br/>RMSE • MAE • R²]
 
-I --> J[POST /api/predict<br/>Accept 12 Features Only]
+H --> I[Model Serialization<br/>xgb_volatility_model.pkl]
 
-J --> K[Model Predicts target<br/>= log(ATR14)]
+I --> J[Flask REST API]
+
+J --> K[POST /api/predict<br/>Accepts 12 Features]
+
+K --> L[Predicted Output<br/>Crypto Volatility<br/>log(ATR14)]
 
