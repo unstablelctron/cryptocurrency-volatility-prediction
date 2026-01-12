@@ -1,3 +1,4 @@
+```mermaid
 flowchart TD
     A[Raw Crypto Market Data] --> B[Feature Engineering]
 
@@ -24,3 +25,4 @@ flowchart TD
     I --> J[Flask API]
     J --> K[POST /api/predict]
     K --> L[Predict log ATR14]
+```
